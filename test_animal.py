@@ -28,7 +28,7 @@ class TestAnimal(unittest.TestCase):
         self.assertEqual(75, result)
 
     def test_animal_it_lives(self):
-        result = self.a._it_lives(24)
+        result = self.a._it_lives(3)
         self.assertFalse(result)
 
 
