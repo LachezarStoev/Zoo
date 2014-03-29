@@ -7,3 +7,27 @@
 * will_it_live(life_expectancy)
 * feed(food_weight_ratio)
 * grow(weight_age_ratio, average_weight)
+----------------done--------------------
+* to-string method
+
+* class zoo
+* animals[]
+* capacity
+* budget
+* database
+
+* will_it_mate(species, name)
+* daily_expenses()
+* daily_incomes()
+* see_animals()
+* accommodate(species, name, age, weight)
+* move_to_habitat(species, name)
+* simulate(interval_of_time, period)
+
+* class database
+* connection, cursor
+* create table
+* get_food_type(species)
+* insert_animal(animal)
+* remove_animal(species, name)
+* get_last_breed(species, name)
