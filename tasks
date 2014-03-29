@@ -1,0 +1,9 @@
+* class animal
+* species
+* age
+* name
+* gender
+* weight
+* will_it_live(life_expectancy)
+* feed(food_weight_ratio)
+* grow(weight_age_ratio, average_weight)
