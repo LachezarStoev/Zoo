@@ -11,11 +11,11 @@ class DataBaseTest(unittest.TestCase):
 		self.assertEqual("herbivore",self.db.get_food_type("red panda"))
 	def test_insert_animal(self):
 		animal = Animal("lion", 24, "sharik", "male", 150)
-		self.db.insert(animal)
+		self.db.insert_animal(animal)
 
-		c = self.zoo_conn.cursor()
-		animal_from_db = c.execute("SELECT  name, species, age, weight FROM ?",(self.db.name,)).fetchall()
-		self.assertEqual(("lion",24,"sharik","male",150),animal_from_db[0])
+		c = self.db.zoo_conn.cursor()
+		animal_from_db = c.execute("SELECT  name, species, age, weight, gender FROM {}".format(self.db.name)).fetchall()
+		self.assertEqual(("sharik","lion",24,150,"male"),animal_from_db[0])
 
 	def tearDown(self):
 		call("rm " + self.db.name,shell=True)
