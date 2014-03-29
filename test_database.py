@@ -16,7 +16,14 @@ class DataBaseTest(unittest.TestCase):
 		c = self.db.zoo_conn.cursor()
 		animal_from_db = c.execute("SELECT  name, species, age, weight, gender FROM {}".format(self.db.name)).fetchall()
 		self.assertEqual(("sharik","lion",24,150,"male"),animal_from_db[0])
+	def test_delete_animal(self):
+		animal = Animal("lion", 24, "sharik", "male", 150)
+		self.db.insert_animal(animal)
+		self.db.remove_animal(animal.species,animal.name)
 
+		c=self.db.zoo_conn.cursor()
+		animal_from_db = c.execute("SELECT * FROM {}".format(self.db.name)).fetchall()
+		self.assertEqual([],animal_from_db)
 	def tearDown(self):
 		call("rm " + self.db.name,shell=True)
 

@@ -20,5 +20,7 @@ class DB():
 		#nito ? stava, nishto {}, nito %
 		#ako namerish reshenie kaji
 		self.zoo_conn.commit()
-
- 
+	def remove_animal(self, species, name):
+		c = self.zoo_conn.cursor()
+		c.execute("DELETE FROM "+self.name+" WHERE species=? and name=?",(species,name))
+		self.zoo_conn.commit()
