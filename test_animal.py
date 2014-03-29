@@ -13,6 +13,9 @@ class TestAnimal(unittest.TestCase):
         self.assertEqual("male", self.a.gender)
         self.assertEqual(150, self.a.weight)
 
+    def test_animal_str(self):
+        self.assertEqual("sharik: lion, 24, 150", str(self.a))
+
     def test_animal_grow(self):
         self.a.grow(250, 7.5)
         self.assertEqual(25, self.a.age)
@@ -27,8 +30,8 @@ class TestAnimal(unittest.TestCase):
         result = self.a.feed(0.5)
         self.assertEqual(75, result)
 
-    def test_animal_it_lives(self):
-        result = self.a.it_lives(3)
+    def test_animal_lives(self):
+        result = self.a.lives(1)
         self.assertFalse(result)
 
 
