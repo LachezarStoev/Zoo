@@ -3,7 +3,7 @@ import sqlite3
 
 class DB():
 
-	def __init__(self, db_name):
+	def __init__(self, db_name="zoo.db"):
 		self.name = db_name
 		self.animal_conn = sqlite3.connect("animals.db")
 		self.zoo_conn = sqlite3.connect(db_name)
