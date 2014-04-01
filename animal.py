@@ -8,6 +8,9 @@ class Animal():
 		self.name = name
 		self.gender = gender
 		self.weight = weight
+		
+	def __eq__(self, other):
+		return self.name == other.name and self.species == other.species
 
 	def __str__(self):
 		return "{0}: {1}, {2}, {3}".format(self.name,

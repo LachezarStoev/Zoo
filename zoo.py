@@ -1,12 +1,14 @@
-__INCOME_PER_ANIMAL = 60
-__MEAT_COST = 4
-__GRASS_COST = 2
-__BREEDING_PERIOD = 6
 import animal
 import database
 
 
 class Zoo():
+
+    __INCOME_PER_ANIMAL = 60
+    __MEAT_COST = 4
+    __GRASS_COST = 2
+    __BREEDING_PERIOD = 6
+
     def __init__(self, capacity, budget, database):
         self.capacity = capacity
         self.budget = budget
@@ -14,18 +16,17 @@ class Zoo():
         self.animals = []
 
     def daily_incomes(self):
-        return __INCOME_PER_ANIMAL * len(self.animals)
+        return Zoo.__INCOME_PER_ANIMAL * len(self.animals)
 
     def daily_expenses(self):
-        global __MEAT_COST, __GRASS_COST
 
         cost = 0
         for animal in self.animals:
             animal_type = self.database.get_food_type(animal.species)
             if animal_type == 'carnivore':
-                cost += __MEAT_COST * animal.feed()
+                cost += Zoo.__MEAT_COST * animal.feed()
             elif animal_type == 'herbivore':
-                cost += __GRASS_COST * animal.feed()
+                cost += Zoo.__GRASS_COST * animal.feed()
 
         return cost
 
@@ -33,7 +34,7 @@ class Zoo():
         animal_list = []
 
         for animal in self.animals:
-            animal_list.append(str(animal)
+            animal_list.append(str(animal))
 
         return '\n'.join(animal_list)
 
@@ -44,7 +45,7 @@ class Zoo():
         self.capacity -= 1
         new_animal= animal.Animal(species, name, gender, age, weight)
         self.animals.append(new_animal)
-        self.database.insert_animal(species, name, gender, age, weight)
+        self.database.insert_animal(animal.Animal(species, name, gender, age, weight))
 
         return True
 
@@ -53,9 +54,9 @@ class Zoo():
 
         for animal in self.animals:
             if animal.species == species and animal.name == name:
-                animals.remove(animal)
+                self.animals.remove(animal)
 
-        self.database.remove(species, name)
+        self.database.remove_animal(species, name)
 
     def will_it_mate(self, species, name):
         # TODO ready_to_mate = self.database.get_last_breed(species, name) == 0
