@@ -22,7 +22,6 @@ class TestZoo(unittest.TestCase):
 		animals_from_db = self.zoo.database.zoo_conn.execute('''select * from zoo''').fetchall()
 		self.assertEqual(1, len(animals_from_db))
 
-<<<<<<< HEAD
 	def test_move_to_habitat(self):
 		self.zoo.accommodate("lion", 24, "sharik", "male", 150)
 		self.zoo.move_to_habitat("lion", "sharik")
@@ -46,7 +45,6 @@ class TestZoo(unittest.TestCase):
 	def tearDown(self):
 		call("rm {}".format("test_zoo.db"),shell=True)
 
-=======
->>>>>>> master
+
 if __name__ == '__main__':
     unittest.main()
