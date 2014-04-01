@@ -1,6 +1,7 @@
 __INCOME_PER_ANIMAL = 60
 __MEAT_COST = 4
 __GRASS_COST = 2
+__BREEDING_PERIOD = 6
 import animal
 import database
 
@@ -43,7 +44,7 @@ class Zoo():
         self.capacity -= 1
         new_animal= animal.Animal(species, name, gender, age, weight)
         self.animals.append(new_animal)
-        self.database.add(species, name, gender, age, weight)
+        self.database.insert_animal(species, name, gender, age, weight)
 
         return True
 
@@ -57,7 +58,7 @@ class Zoo():
         self.database.remove(species, name)
 
     def will_it_mate(self, species, name):
-        ready_to_mate = self.database.ready_to_mate(species, name)
+        # TODO ready_to_mate = self.database.get_last_breed(species, name) == 0
         return ready_to_mate
 
     def simulation(self, interval_of_time, period):
