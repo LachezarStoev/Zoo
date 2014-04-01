@@ -10,7 +10,7 @@ class Database():
 		self.create_table()
 
 	def create_table(self):
-		c = self.zoo_conn
+		c = self.zoo_conn.cursor()
 		c.execute('''create table if not exists zoo
 			(id integer primary key, name text,
                 species text, age int, weight real, gender text)''')
@@ -20,11 +20,29 @@ class Database():
 
 	def get_food_type(self, species):
 		c = self.animal_conn.cursor()
-		food_type = c.execute("select food_type from animals where species=?",
+		food_type = c.execute('''select food_type
+                from animals where species=?''',
             (species,)).fetchone()
 		return food_type[0]
 
+<<<<<<< HEAD
 	def insert_animal(self, animal):	
+=======
+    def get_food_weight_ratio(self, species):
+        c = self.animal_conn.cursor()
+        food_weight_ratio = c.execute("select food_weight_ratio from animals where species=?",
+            (species,)).fetchone()
+        return food_weight_ratio[0]
+
+    def get_gestation(self, species):
+        c = self.animal_conn.cursor()
+        gestation = c.execute('''select gestation
+                from animals where species=?''',
+                (species,)).fetchone()
+        return gestation[0]
+
+	def insert_animal(self, animal):
+>>>>>>> master
 		c = self.zoo_conn.cursor()
 		c.execute('''insert into zoo(name, species, age, weight, gender)
             values(?, ?, ?, ?, ?)''',
