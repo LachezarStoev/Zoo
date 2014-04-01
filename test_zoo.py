@@ -4,6 +4,7 @@ from database import Database
 from animal import Animal
 from subprocess import call
 
+
 class TestZoo(unittest.TestCase):
 	def setUp(self):
 		self.zoo = Zoo(5, 50, Database("test_zoo.db"))
@@ -39,11 +40,12 @@ class TestZoo(unittest.TestCase):
 
 	def test_daily_expenses(self):
 		self.zoo.accommodate("lion", 24, "sharik", "male", 150)
-		expected = 150 * self.zoo.database.get_food_ratio("lion")
-		self.assertEqual(expected, self.zoo.daily_expenses())
+		expected = 150 * self.zoo.database.get_food_weight_ratio("lion")
+		self.assertEqual(expected * 4, self.zoo.daily_expenses())
 
 	def tearDown(self):
 		call("rm {}".format("test_zoo.db"),shell=True)
+
 
 if __name__ == '__main__':
     unittest.main()

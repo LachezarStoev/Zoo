@@ -26,9 +26,9 @@ class Zoo():
             food_weight_ratio =\
                 self.database.get_food_weight_ratio(animal.species)
             if animal_type == 'carnivore':
-                cost += __MEAT_COST * animal.feed(food_weight_ratio)
+                cost += Zoo.__MEAT_COST * animal.feed(food_weight_ratio)
             elif animal_type == 'herbivore':
-                cost += __GRASS_COST * animal.feed(food_weight_ratio)
+                cost += Zoo.__GRASS_COST * animal.feed(food_weight_ratio)
 
         return cost
 
@@ -47,7 +47,8 @@ class Zoo():
         self.capacity -= 1
         new_animal = animal.Animal(species, name, gender, age, weight)
         self.animals.append(new_animal)
-        self.database.insert_animal(animal.Animal(species, name, gender, age, weight))
+        self.database.insert_animal(animal.Animal(species,
+                name, gender, age, weight))
 
         return True
 
@@ -62,7 +63,7 @@ class Zoo():
 
     def will_it_mate(self, species, name):
         breeding_period =\
-            __BREEDING_PERIOD + self.database.get_gestation(species)
+            Zoo.__BREEDING_PERIOD + self.database.get_gestation(species)
         ready_to_mate =\
             breeding_period <= self.database.get_last_breed(species, name)
         return ready_to_mate
