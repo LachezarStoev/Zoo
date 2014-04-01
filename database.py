@@ -18,6 +18,13 @@ class Database():
             (id int, last_breed int,
                 foreign key (id) references zoo (id))''')
 
+    def get_life_expectancy(self, species):
+        c = self.animal_conn.cursor()
+        life_expectancy = c.execute('''select life_expectancy
+                from animals where species=?''',
+            (species,)).fetchone()
+        return life_expectancy[0]
+
     def get_food_type(self, species):
         c = self.animal_conn.cursor()
         food_type = c.execute('''select food_type
@@ -25,26 +32,36 @@ class Database():
             (species,)).fetchone()
         return food_type[0]
 
-    def get_life_expectancy(self, species):
-        c = self.animal_conn.cursor()
-        life_expectancy = c.execute('''select life_expectancy
-                from animals where species=?''',
-            (species,)).fetchone()
-        return life_expectancy[0]
-        
-    def get_food_weight_ratio(self, species):
-        c = self.animal_conn.cursor()
-        food_weight_ratio = c.execute('''select food_weight_ratio
-                from animals where species=?''',
-            (species,)).fetchone()
-        return food_weight_ratio[0]
-
     def get_gestation(self, species):
         c = self.animal_conn.cursor()
         gestation = c.execute('''select gestation
                 from animals where species=?''',
                 (species,)).fetchone()
         return gestation[0]
+        
+    def get_newborn_weight(self, species):
+        c = self.animal_conn.cursor()
+        newborn_weight = c.execute('''select newborn_weight
+                from animals where species=?''',
+                (species,)).fetchone()
+        return newborn_weight[0]
+
+    def get_average_weight(self, species):
+        c = self.animal_conn.cursor()
+        weight = c.execute('''select average_weight from animals where species=?)''',(species, )).fetchone()
+        return weight[0]
+
+    def get_weight_age_radio(self, species):
+        c = self.animal_conn.cursor()
+        age = c.execute('''select weight_age_ratio from animals where species=?)''',(species, )).fetchone()
+        return age[0]
+
+    def get_food_weight_ratio(self, species):
+        c = self.animal_conn.cursor()
+        food_weight_ratio = c.execute('''select food_weight_ratio
+                from animals where species=?''',
+            (species,)).fetchone()
+        return food_weight_ratio[0]
 
     def insert_animal(self, animal):
         c = self.zoo_conn.cursor()
