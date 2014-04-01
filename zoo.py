@@ -42,7 +42,7 @@ class Zoo():
             return False
 
         self.capacity -= 1
-        new_animal= animal.Animal(species, name, gender, age, weight)
+        new_animal = animal.Animal(species, name, gender, age, weight)
         self.animals.append(new_animal)
         self.database.insert_animal(species, name, gender, age, weight)
 
@@ -58,7 +58,10 @@ class Zoo():
         self.database.remove(species, name)
 
     def will_it_mate(self, species, name):
-        # TODO ready_to_mate = self.database.get_last_breed(species, name) == 0
+        breeding_period =\
+            __BREEDING_PERIOD + self.database.get_gestation(species)
+        ready_to_mate =\
+            breeding_period <= self.database.get_last_breed(species, name)
         return ready_to_mate
 
     def simulation(self, interval_of_time, period):
@@ -67,7 +70,6 @@ class Zoo():
     def _simulate_days(self, period):
         for i in range(1, period + 1):
             print("day {}".format(i))
-
 
     def _simulate_weeks(self, period):
         pass
