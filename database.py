@@ -21,7 +21,7 @@ class DB():
 		food_type = c.execute("SELECT food_type FROM animals WHERE species=?",(species,)).fetchone()
 		return food_type[0]
 
-	def insert_animal(self, animal):
+	def insert_animal(self, animal):	
 		c = self.zoo_conn.cursor()
 		c.execute("INSERT INTO zoo(name, species, age, weight, gender) VALUES(?,?,?,?,?)",(animal.name,animal.species,animal.age,animal.weight,animal.gender))
 		if animal.gender == "female":
