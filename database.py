@@ -24,7 +24,7 @@ class Database():
                 from animals where species=?''',
             (species,)).fetchone()
 		return food_type[0]
-
+        
     def get_food_weight_ratio(self, species):
         c = self.animal_conn.cursor()
         food_weight_ratio = c.execute("select food_weight_ratio from animals where species=?",
