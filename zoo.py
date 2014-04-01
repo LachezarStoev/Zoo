@@ -22,10 +22,12 @@ class Zoo():
         cost = 0
         for animal in self.animals:
             animal_type = self.database.get_food_type(animal.species)
+            food_weight_ratio =\
+                self.database.get_food_weight_ratio(animal.species)
             if animal_type == 'carnivore':
-                cost += __MEAT_COST * animal.feed()
+                cost += __MEAT_COST * animal.feed(food_weight_ratio)
             elif animal_type == 'herbivore':
-                cost += __GRASS_COST * animal.feed()
+                cost += __GRASS_COST * animal.feed(food_weight_ratio)
 
         return cost
 
