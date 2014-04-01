@@ -24,6 +24,13 @@ class Database():
                 from animals where species=?''',
             (species,)).fetchone()
         return food_type[0]
+
+    def get_life_expectancy(self, species):
+        c = self.animal_conn.cursor()
+        life_expectancy = c.execute('''select life_expectancy
+                from animals where species=?''',
+            (species,)).fetchone()
+        return life_expectancy[0]
         
     def get_food_weight_ratio(self, species):
         c = self.animal_conn.cursor()

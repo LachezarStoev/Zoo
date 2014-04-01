@@ -1,5 +1,6 @@
 import animal
 import database
+from random import randint
 
 
 class Zoo():
@@ -40,6 +41,17 @@ class Zoo():
 
         return '\n'.join(animal_list)
 
+    def random_gender(self):
+        gender = randint(0, 1)
+        if gender == 0:
+            gender = "male"
+        else:
+            gender = "female"
+        return gender
+
+    def _animal_is_born(self, father, mother):
+        gender = self.random_gender()
+
     def accommodate(self, species, name, gender, age, weight):
         if self.capacity <= 0:
             return False
@@ -69,11 +81,26 @@ class Zoo():
         return ready_to_mate
 
     def simulation(self, interval_of_time, period):
-        self.getattribute('_simulate_{0}'.format(interval_of_time))(period)
+        for i in range(period):
+            print("\n{0} {1}:".format(interval_of_time, i + 1))
+            self.__getattribute__\
+                ('_simulate_{0}'.format(interval_of_time))(period)
 
     def _simulate_days(self, period):
-        for i in range(1, period + 1):
-            print("day {}".format(i))
+        for animal in self.animals:
+            if not animal.lives\
+                    (self.database.get_life_expectancy(animal.species)):
+                self.animals.remove(animal)
+                self.database.remove_animal(animal.species, animal.name)
+                died = "{} {} has died..".format(animal.name, animal.species)
+                print(died)
+            elif animal.gender == "female" and self.database.ready_to_mate():
+
+        expenses = "daily expenses: {}".format(self.daily_expenses())
+        print(expenses)
+        print(self.see_animals())
+
+
 
     def _simulate_weeks(self, period):
         pass
