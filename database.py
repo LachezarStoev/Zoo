@@ -20,15 +20,26 @@ class Database():
                 foreign key (id) references zoo (id))''')
 
     def has_male(self, species):
-        c = self.zoo_conn.cursor()
-        males = c.execute("select * from zoo where gender=male").fetchall()
+        males = self.get_males()
         return len(males) > 0
 
     def get_male_name(self, species):
-        c = self.zoo_conn.cursor()
-        males = c.execute("select name from zoo where gender=male").fetchall()
+        males = self.get_males(species)
         rand_male = randint(0, len(males))
         return males[rand_male][0]
+
+    def get_males(self, species):
+        c = self.zoo_conn.cursor()
+        select_query = '''select name
+                from zoo
+                where gender=male and species=?'''
+        males = c.execute(select_query, species).fetchall()
+        return male
+
+    def get_females(self):
+        c = self.zoo_conn.cursor()
+        females = c.execute("select species, name from zoo where gender=female").fetchall()
+        return females
 
     def get_life_expectancy(self, species):
         c = self.animal_conn.cursor()
