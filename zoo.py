@@ -19,6 +19,16 @@ class Zoo():
     def daily_incomes(self):
         return Zoo.__INCOME_PER_ANIMAL * len(self.animals)
 
+    def spend_budget(self, amount):
+        if self.budget >= amount:
+            self.budget -= amount
+            return True
+        else:
+            return False
+
+    def earn_budget(self, amount):
+        self.budget += amount
+
     def daily_expenses(self):
 
         cost = 0
