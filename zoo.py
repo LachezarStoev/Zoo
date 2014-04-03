@@ -92,8 +92,8 @@ class Zoo():
 
     def born_animal(self, species, name):
         weight = self.database.get_newborn_weight(species)
-        gender = _random_gender()
-        name = _generate_name(species, name, gender)
+        gender = self._random_gender()
+        name = self._generate_name(species, name, gender)
         new_animal = animal.Animal(species, 1, name, gender, weight)
         self.animals.append(new_animal)
         self.database.insert_animal(new_animal)

@@ -13,7 +13,7 @@ class Animal():
         return self.name == other.name and self.species == other.species
 
     def __str__(self):
-        return "{0}: {1}, {2}, {3}".format(self.name,
+        return "{0} the {1}: {2} months, {3} kgs".format(self.name,
                     self.species, self.age, self.weight)
 
     def grow(self, average_weight, weight_age_ratio):
@@ -23,7 +23,8 @@ class Animal():
 
     def lives(self, life_expectancy):
         life_expectancy_in_months = life_expectancy * 12
-        return randint(1, life_expectancy_in_months) > self.age
+        chance = randint(1, life_expectancy_in_months)
+        return chance > self.age
         
     def feed(self, food_weight_ratio):
         return food_weight_ratio * self.weight

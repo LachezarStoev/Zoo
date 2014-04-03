@@ -20,25 +20,26 @@ class Database():
                 foreign key (id) references zoo (id))''')
 
     def has_male(self, species):
-        males = self.get_males()
+        males = self.get_males(species)
         return len(males) > 0
 
     def get_male_name(self, species):
         males = self.get_males(species)
-        rand_male = randint(0, len(males))
+        rand_male = randint(0, len(males)-1)
         return males[rand_male][0]
 
     def get_males(self, species):
         c = self.zoo_conn.cursor()
         select_query = '''select name
                 from zoo
-                where gender=male and species=?'''
-        males = c.execute(select_query, species).fetchall()
-        return male
+                where gender='male' and species=?'''
+        males = c.execute(select_query, (species, )).fetchall()
+        return males
 
     def get_females(self):
         c = self.zoo_conn.cursor()
-        females = c.execute("select species, name from zoo where gender=female").fetchall()
+        females = c.execute('''select species, name
+            from zoo where gender='female' ''').fetchall()
         return females
 
     def get_life_expectancy(self, species):
@@ -71,12 +72,13 @@ class Database():
 
     def get_average_weight(self, species):
         c = self.animal_conn.cursor()
-        weight = c.execute('''select average_weight from animals where species=?)''',(species, )).fetchone()
+        weight = c.execute('''select average_weight
+            from animals where species=?''', (species, )).fetchone()
         return weight[0]
 
-    def get_weight_age_radio(self, species):
+    def get_weight_age_ratio(self, species):
         c = self.animal_conn.cursor()
-        age = c.execute('''select weight_age_ratio from animals where species=?)''',(species, )).fetchone()
+        age = c.execute('''select weight_age_ratio from animals where species=?''',(species, )).fetchone()
         return age[0]
 
     def get_food_weight_ratio(self, species):
@@ -104,12 +106,22 @@ class Database():
         c = self.zoo_conn.cursor()
         animal_id = c.execute('''select id from zoo
                 where species=? and name=?''',(species, name)).fetchone()
-        if len(animal_id) != 0:
+        if animal_id != None and len(animal_id) != 0:
             c.execute("delete from zoo where species=? and name=?",
-                (species,name))
+                (species, name))
             c.execute("delete from breeding where id=?",
                 (str(animal_id[0]),))
         self.zoo_conn.commit()  
+
+    def set_last_breed(self, species, name, last_breed):
+        c = self.zoo_conn.cursor()
+        select_query = '''select id from zoo
+            where species=? and name=?'''
+        id_ = c.execute(select_query, (species, name)).fetchone()[0]
+        update_query = '''update breeding
+                set last_breed=?
+                where id=?'''
+        c.execute(update_query, (last_breed, id_))
 
     def get_last_breed(self, species, name):
         c = self.zoo_conn.cursor()
