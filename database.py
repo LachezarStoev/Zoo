@@ -1,4 +1,5 @@
 import sqlite3
+from random import randint
 
 
 class Database():
@@ -17,6 +18,17 @@ class Database():
         c.execute('''create table if not exists breeding
             (id int, last_breed int,
                 foreign key (id) references zoo (id))''')
+
+    def has_male(self, species):
+        c = self.zoo_conn.cursor()
+        males = c.execute("select * from zoo where gender=male").fetchall()
+        return len(males) > 0
+
+    def get_male_name(self, species):
+        c = self.zoo_conn.cursor()
+        males = c.execute("select name from zoo where gender=male").fetchall()
+        rand_male = randint(0, len(males))
+        return males[rand_male][0]
 
     def get_life_expectancy(self, species):
         c = self.animal_conn.cursor()

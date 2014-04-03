@@ -41,17 +41,6 @@ class Zoo():
 
         return '\n'.join(animal_list)
 
-    def random_gender(self):
-        gender = randint(0, 1)
-        if gender == 0:
-            gender = "male"
-        else:
-            gender = "female"
-        return gender
-
-    def _animal_is_born(self, father, mother):
-        gender = self.random_gender()
-
     def accommodate(self, species, name, gender, age, weight):
         if self.capacity <= 0:
             return False
@@ -76,38 +65,34 @@ class Zoo():
     def move_to_habitat(self, species, name):
         remove(species, name)
 
+    def _random_gender(self):
+        gender = randint(0, 1)
+        if gender == 0:
+            gender = "male"
+        else:
+            gender = "female"
+        return gender
+
+    def _generate_name(self, species, name, gender):
+        male_name = self.database.get_male_name(species)
+        if gender == 'male':
+            return '{} {}'.format(male_name, name)
+        else:
+            return "{} {}".format(name, male_name)
+
+    def born_animal(self, species, name):
+        weight = self.database.get_newborn_weight(species)
+        gender = _random_gender()
+        name = _generate_name(species, name, gender)
+        new_animal = animal.Animal(species, 1, name, gender, weight)
+        self.animals.append(new_animal)
+        self.database.insert_animal(new_animal)
+
     def will_it_mate(self, species, name):
         breeding_period =\
             Zoo.__BREEDING_PERIOD + self.database.get_gestation(species)
-        ready_to_mate =\
+        has_mate = self.database.has_male(species)
+        ready_to_breed =\
             breeding_period <= self.database.get_last_breed(species, name)
-        return ready_to_mate
 
-    def simulation(self, interval_of_time, period):
-        for i in range(period):
-            print("\n{0} {1}:".format(interval_of_time, i + 1))
-            self.__getattribute__\
-                ('_simulate_{0}'.format(interval_of_time))(period)
-
-    def _simulate_days(self, period):
-        for animal in self.animals:
-            if not animal.lives\
-                    (self.database.get_life_expectancy(animal.species)):
-                self.animals.remove(animal)
-                self.database.remove_animal(animal.species, animal.name)
-                died = "{} {} has died..".format(animal.name, animal.species)
-                print(died)
-            elif animal.gender == "female" and self.database.ready_to_mate():
-
-        expenses = "daily expenses: {}".format(self.daily_expenses())
-        print(expenses)
-        print(self.see_animals())
-
-
-
-    def _simulate_weeks(self, period):
-        pass
-    def _simulate_months(self, period):
-        pass
-    def _simulate_years(self, period):
-        pass
+        return has_mate and ready_to_breed
