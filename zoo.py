@@ -19,6 +19,16 @@ class Zoo():
     def daily_incomes(self):
         return Zoo.__INCOME_PER_ANIMAL * len(self.animals)
 
+    def spend_budget(self, amount):
+        if self.budget >= amount:
+            self.budget -= amount
+            return True
+        else:
+            return False
+
+    def earn_budget(self, amount):
+        self.budget += amount
+
     def daily_expenses(self):
 
         cost = 0
@@ -82,32 +92,3 @@ class Zoo():
         ready_to_mate =\
             breeding_period <= self.database.get_last_breed(species, name)
         return ready_to_mate
-
-    def simulation(self, interval_of_time, period):
-        for i in range(period):
-            print("\n{0} {1}:".format(interval_of_time, i + 1))
-            self.__getattribute__\
-                ('_simulate_{0}'.format(interval_of_time))(period)
-
-    def _simulate_days(self, period):
-        for animal in self.animals:
-            if not animal.lives\
-                    (self.database.get_life_expectancy(animal.species)):
-                self.animals.remove(animal)
-                self.database.remove_animal(animal.species, animal.name)
-                died = "{} {} has died..".format(animal.name, animal.species)
-                print(died)
-            elif animal.gender == "female" and self.database.ready_to_mate():
-
-        expenses = "daily expenses: {}".format(self.daily_expenses())
-        print(expenses)
-        print(self.see_animals())
-
-
-
-    def _simulate_weeks(self, period):
-        pass
-    def _simulate_months(self, period):
-        pass
-    def _simulate_years(self, period):
-        pass

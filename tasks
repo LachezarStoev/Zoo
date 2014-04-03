@@ -3,8 +3,8 @@
 
 add to Zoo:
 methods:
-*spend_budget(amount)
-*earn_budget(amount)
+*spend_budget(amount) // DONE
+*earn_budget(amount) // DONE
 -------------------------------
 **change_method will_it_mate**
 **born_animal(species, name)**
