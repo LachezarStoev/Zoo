@@ -1,14 +1,29 @@
 * simulate(interval_of_time, period)
 * will it mate
 
-tests:
+add to Zoo:
+methods:
+*spend_budget(amount)
+*earn_budget(amount)
+-------------------------------
+**change_method will_it_mate**
+**born_animal(species, name)**
+-------------------------------
 
-* init------------- L
-* daily incomes---- A
-* daily expenses--- C
-* see_animals------ H
-* accommodate------ O
-* move to habitat-- O
+class Simulation:
+    current_time (starts from 0)
+    zoo
+methods:
+------------------------------------------------------------------------
+*simulation(interval_of_time, period) calls appropriate method for period times
 
-method plus test
-*** will it mate--- danko
+*remove simulation methods from class zoo
+
+simulate methods:
+*simulate_cycle(interval_of_time)
+*alive_animals(interval_of_time)
+*feed_animals(interval_of_time) (if zoo has enough money)
+*get_money(interval_of_time)
+----------------------------------------------------------------------
+*grow_animals(interval_of_time)
+*animals_to_be_born(interval_of_time)

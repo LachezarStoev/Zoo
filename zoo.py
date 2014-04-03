@@ -64,7 +64,7 @@ class Zoo():
 
         return True
 
-    def move_to_habitat(self, species, name):
+    def remove(self, species, name):
         self.capacity += 1
 
         for animal in self.animals:
@@ -72,6 +72,9 @@ class Zoo():
                 self.animals.remove(animal)
 
         self.database.remove_animal(species, name)
+
+    def move_to_habitat(self, species, name):
+        remove(species, name)
 
     def will_it_mate(self, species, name):
         breeding_period =\
