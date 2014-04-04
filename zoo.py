@@ -1,33 +1,50 @@
-import animal
-import database
+from animal import Animal
+from database import Database
 from random import randint
 
 
 class Zoo():
-
     __INCOME_PER_ANIMAL = 60
     __MEAT_COST = 4
     __GRASS_COST = 2
     __BREEDING_PERIOD = 6
 
     def __init__(self, capacity, budget, database):
+        self.animals = []
         self.capacity = capacity
         self.budget = budget
         self.database = database
-        self.animals = []
+
+    def accommodate(self, species, age, name, gender, weight):
+        if self.capacity <= len(self.animals):
+            return False
+
+        new_animal = Animal(species, age, name, gender, weight)
+        self.animals.append(new_animal)
+        self.database.insert_animal(new_animal)
+        return True
+
+    def remove(self, species, name):
+        for animal in self.animals:
+            if animal.species == species and animal.name == name:
+                self.animals.remove(animal)
+                break
+
+        self.database.remove_animal(species, name)
+
+    def move_to_habitat(self, species, name):
+        self.remove(species, name)
+
+    def see_animals(self):
+        animal_list = []
+
+        for animal in self.animals:
+            animal_list.append(str(animal))
+
+        return '\n'.join(animal_list)
 
     def daily_incomes(self):
         return Zoo.__INCOME_PER_ANIMAL * len(self.animals)
-
-    def spend_budget(self, amount):
-        if self.budget >= amount:
-            self.budget -= amount
-            return True
-        else:
-            return False
-
-    def earn_budget(self, amount):
-        self.budget += amount
 
     def daily_expenses(self):
 
@@ -43,37 +60,15 @@ class Zoo():
 
         return cost
 
-    def see_animals(self):
-        animal_list = []
-
-        for animal in self.animals:
-            animal_list.append(str(animal))
-
-        return '\n'.join(animal_list)
-
-    def accommodate(self, species, name, gender, age, weight):
-        if self.capacity <= 0:
+    def spend_budget(self, amount):
+        if self.budget >= amount:
+            self.budget -= amount
+            return True
+        else:
             return False
 
-        self.capacity -= 1
-        new_animal = animal.Animal(species, name, gender, age, weight)
-        self.animals.append(new_animal)
-        self.database.insert_animal(animal.Animal(species,
-                name, gender, age, weight))
-
-        return True
-
-    def remove(self, species, name):
-        self.capacity += 1
-
-        for animal in self.animals:
-            if animal.species == species and animal.name == name:
-                self.animals.remove(animal)
-
-        self.database.remove_animal(species, name)
-
-    def move_to_habitat(self, species, name):
-        remove(species, name)
+    def earn_budget(self, amount):
+        self.budget += amount
 
     def _random_gender(self):
         gender = randint(0, 1)
@@ -91,12 +86,18 @@ class Zoo():
             return "{} {}".format(name, male_name)
 
     def born_animal(self, species, name):
+        self.database.set_last_breed(species, name, 0)
         weight = self.database.get_newborn_weight(species)
         gender = self._random_gender()
         name = self._generate_name(species, name, gender)
-        new_animal = animal.Animal(species, 1, name, gender, weight)
+        new_animal = Animal(species, 1, name, gender, weight)
         self.animals.append(new_animal)
         self.database.insert_animal(new_animal)
+
+        if len(self.animals) > self.capacity:
+            return False
+
+        return True
 
     def will_it_mate(self, species, name):
         breeding_period =\
