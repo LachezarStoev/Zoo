@@ -23,8 +23,10 @@ class Animal():
 
     def lives(self, life_expectancy):
         life_expectancy_in_months = life_expectancy * 12
-        chance = randint(1, life_expectancy_in_months)
-        return chance > self.age
+        difference = life_expectancy_in_months - self.age
+        difference = difference < 0 or difference
+        chance = randint(0, difference)
+        return chance == 0
         
     def feed(self, food_weight_ratio):
         return food_weight_ratio * self.weight
