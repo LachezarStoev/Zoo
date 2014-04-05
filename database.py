@@ -47,6 +47,15 @@ class Database():
                 (str(animal_id[0]),))
         self.zoo_conn.commit()
 
+    def update_animal(self, species, name, new_weight, new_age):
+        c = self.zoo_conn.cursor()
+        update_query = '''update zoo
+                set weight=?, age=?
+                where species=? and name=?'''
+        c.execute(update_query, (new_weight, new_age,
+            species, name))
+        self.zoo_conn.commit()
+
     def get_males(self, species):
         c = self.zoo_conn.cursor()
         select_query = '''select name
@@ -116,3 +125,9 @@ class Database():
                 set last_breed=?
                 where id=?'''
         c.execute(update_query, (last_breed, id))
+        self.zoo_conn.commit()
+
+    def get_animals(self):
+        return self.zoo_conn.execute('''
+            select species, age, name, gender, weight
+            from zoo''')

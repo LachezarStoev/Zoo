@@ -14,6 +14,12 @@ class Zoo():
         self.capacity = capacity
         self.budget = budget
         self.database = database
+        self._load_animals_database()
+
+    def _load_animals_database(self):
+        for animal in  self.database.get_animals():
+            new_animal = Animal(*animal)
+            self.animals.append(new_animal)
 
     def accommodate(self, species, age, name, gender, weight):
         if self.capacity <= len(self.animals):
@@ -86,7 +92,7 @@ class Zoo():
             return "{} {}".format(name, male_name)
 
     def born_animal(self, species, name):
-        self.database.set_last_breed(species, name, 0)
+        self.database.set_last_breed(species, name, 6)
         weight = self.database.get_newborn_weight(species)
         gender = self._random_gender()
         name = self._generate_name(species, name, gender)

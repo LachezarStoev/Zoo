@@ -3,11 +3,11 @@ from random import randint
 
 class Animal():
     def __init__(self, species, age, name, gender, weight):
-        self.species = species
-        self.age = age
-        self.name = name
-        self.gender = gender
-        self.weight = weight
+        self.species = str(species)
+        self.age = int(age)
+        self.name = str(name)
+        self.gender = str(gender)
+        self.weight = float(weight)
         
     def __eq__(self, other):
         return self.name == other.name and self.species == other.species
@@ -26,7 +26,8 @@ class Animal():
         difference = life_expectancy_in_months - self.age
         difference = difference < 0 or difference
         chance = randint(0, difference)
-        return chance == 0
+
+        return chance != 0
         
     def feed(self, food_weight_ratio):
         return food_weight_ratio * self.weight
