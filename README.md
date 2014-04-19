@@ -17,7 +17,7 @@ you should use too ^^
 * gender
 * weight
 
-An animal can grow (increase it's weight and age),
+An animal can grow (increase its weight and age),
 can eat (consume food). It also has increased chance of dying
 when getting older (nearer to the average life expectancy = higher chance).
 
@@ -30,7 +30,7 @@ when getting older (nearer to the average life expectancy = higher chance).
 The zoo can accommodate an animal, it has daily incomes depending on
 how much animals it has (the more animals it has, the more interesting it will
 be to go into that zoo, right?) and daily outcomes depending on how much do the
-animals eat (every food has it's price)
+animals eat (every food has its price)
 (and, sadly, sometimes animals happen to die :/).
 Also, our animals reproduce half an year (6 months) after their gestation period is over.
 
@@ -62,7 +62,7 @@ The ages in the table are in months
 
 You should have the following interface to communicate with the written program:
 
-`see_animals`- prints all animals in the zoo in the following format: `<name> : <species>, <age>, <weight>`
+`see_animals` - prints all animals in the zoo in the following format: `<name> : <species>, <age>, <weight>`
 
 `accommodate <species> <name> <age> <weight>` - adds an animal to the zoo
 
