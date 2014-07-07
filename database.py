@@ -83,7 +83,9 @@ class Database():
         c = self.animals_conn.cursor()
         select_query = '''select {}
             from animals where species=?'''.format(parameter)
-        result = c.execute(select_query, (species, )).fetchone()[0]
+        result = c.execute(select_query, (species, )).fetchone()
+        if result == None:
+            return 0
         return result
 
     def get_life_expectancy(self, species):
